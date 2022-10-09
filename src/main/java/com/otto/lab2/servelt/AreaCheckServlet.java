@@ -6,8 +6,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.otto.lab2.entity.Dot;
 import com.otto.lab2.entity.TableRow;
 import com.otto.lab2.service.HitChecker;
-import com.otto.lab2.session.TypeSafeHttpSession;
-import com.otto.lab2.session.TypeSafeHttpSessionImpl;
+import com.otto.lab2.session.TypeSafeSessionWorker;
 import com.otto.lab2.util.DotBuilder;
 
 import javax.servlet.ServletException;
@@ -53,8 +52,7 @@ public class AreaCheckServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         long startTime = System.nanoTime();
 
-        TypeSafeHttpSession<TableRow> session = new TypeSafeHttpSessionImpl(req.getSession());
-
+        TypeSafeSessionWorker<TableRow> session = new TypeSafeHttpSession(req.getSession());
 
         Dot dot = dotBuilder.build(req);
         boolean hitCheckResult = hitChecker.check(dot);
@@ -62,7 +60,6 @@ public class AreaCheckServlet extends HttpServlet {
         TableRow newRow = buildTableRow(dot, utcOffset, hitCheckResult, startTime);
 
         session.updateAttribute(TABLE_ATTRIBUTE_NAME, newRow);
-
         resp.setStatus(HttpServletResponse.SC_OK);
         resp.setContentType(CONTENT_TYPE);
         resp.setCharacterEncoding(ENCODING);
@@ -81,12 +78,6 @@ public class AreaCheckServlet extends HttpServlet {
                 (System.nanoTime() - startTime) / 1000000d,
                 hitCheckResult
         );
-    }
-
-    public static void main(String[] args) {
-        long start = System.nanoTime();
-        AreaCheckServlet servlet = new AreaCheckServlet();
-        System.out.println(servlet.buildTableRow(new Dot(1, 2, 1), -180, true, start));
     }
 
 }

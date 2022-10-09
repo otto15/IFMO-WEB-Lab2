@@ -1,6 +1,7 @@
-package com.otto.lab2.session;
+package com.otto.lab2.servelt;
 
 import com.otto.lab2.entity.TableRow;
+import com.otto.lab2.session.TypeSafeSessionWorker;
 import lombok.Value;
 
 import javax.servlet.http.HttpSession;
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Value
-public class TypeSafeHttpSessionImpl implements TypeSafeHttpSession<TableRow> {
+public class TypeSafeHttpSession implements TypeSafeSessionWorker<TableRow> {
 
     HttpSession session;
 

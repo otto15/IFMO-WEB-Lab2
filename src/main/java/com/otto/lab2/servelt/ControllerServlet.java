@@ -4,8 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.otto.lab2.entity.TableRow;
-import com.otto.lab2.session.TypeSafeHttpSession;
-import com.otto.lab2.session.TypeSafeHttpSessionImpl;
+import com.otto.lab2.session.TypeSafeSessionWorker;
 import com.otto.lab2.util.InvalidTablePostRequestException;
 import com.otto.lab2.util.TablePostRequestValidator;
 import com.otto.lab2.util.Validator;
@@ -52,7 +51,7 @@ public class ControllerServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        TypeSafeHttpSession<TableRow> session = new TypeSafeHttpSessionImpl(req.getSession());
+        TypeSafeSessionWorker<TableRow> session = new TypeSafeHttpSession(req.getSession());
 
         resp.setStatus(HttpServletResponse.SC_OK);
         resp.setContentType(CONTENT_TYPE);
@@ -66,7 +65,7 @@ public class ControllerServlet extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        TypeSafeHttpSession<TableRow> session = new TypeSafeHttpSessionImpl(req.getSession());
+        TypeSafeSessionWorker<TableRow> session = new TypeSafeHttpSession(req.getSession());
         session.cleanAttribute(TABLE_ATTRIBUTE_NAME);
         resp.setStatus(HttpServletResponse.SC_OK);
     }
