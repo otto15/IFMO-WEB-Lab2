@@ -21,8 +21,7 @@ function deleteAllDots() {
 }
 
 function recreateDots(r) {
-    let svg = document.querySelector("svg");
     circles[r].forEach(
-        circle => svg.appendChild(circle)
+        circle => showDot(circle)
     );
 }
