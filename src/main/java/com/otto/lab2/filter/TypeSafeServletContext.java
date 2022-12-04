@@ -20,12 +20,15 @@ public class TypeSafeServletContext {
             throw new NullPointerException("Damn it, how did you let that happen");
         }
 
-
-        Map<?, ?> mapUnderConsideration = (Map<?, ?>) headersObject;
-        Map<String, Long> headers = mapUnderConsideration.entrySet()
-                .stream()
-                .collect(Collectors.toMap(e -> (String) e.getKey(), e -> (Long) e.getValue()));
-
+        try {
+            Map<?, ?> mapUnderConsideration = (Map<?, ?>) headersObject;
+            mapUnderConsideration.forEach((key1, value1) -> {
+                String key = (String) key1;
+                Long value = (Long) value1;
+            });
+        } catch (ClassCastException e) {
+            throw new IllegalArgumentException("Damn it, how did you let that happen");
+        }
 
         return (Map<String, Long>) headersObject;
     }

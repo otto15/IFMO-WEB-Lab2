@@ -33,7 +33,6 @@ public class ControllerServletFilter implements Filter {
             String currentHeader = reqHeaderNames.nextElement();
             context.incrementHeaderMetCount("headers", currentHeader);
         }
-
         filterChain.doFilter(request, servletResponse);
     }
 

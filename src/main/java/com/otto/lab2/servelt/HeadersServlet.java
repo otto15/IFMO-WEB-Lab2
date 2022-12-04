@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
 
-@WebServlet(value = "/headers", urlPatterns = "/headers")
+@WebServlet(value = "/headers")
 public class HeadersServlet extends HttpServlet {
 
     private static final String CONTENT_TYPE = "application/json";
